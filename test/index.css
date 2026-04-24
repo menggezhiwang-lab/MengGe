@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(71,72,75);
+    scrollbar-width: none;
+}
+/* .ah:nth-child(odd){
+    animation: god 1s linear 0s infinite;
+}
+
+.ah:nth-child(even){
+    animation: god 1s linear 0s infinite reverse;
+}
+
+@keyframes god {
+    0% {
+        transform: translate(-100px,0px) rotate(0deg);
+    }
+    25%{
+        transform: translate(0px,-100px) rotate(180deg);
+    }
+    50%{
+        transform: translate(100px,0px) rotate(180deg);
+    } 
+    75%{
+        transform: translate(0px,100px) rotate(180deg);
+    }
+    100%{
+        transform: translate(-100px,0px) rotate(360deg);
+    }
+}  */

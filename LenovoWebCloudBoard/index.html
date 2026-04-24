@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, 
+    initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title wm-bind="title"></title>
+    <link rel="icon" href="src/icon.png" type ="image/x-icon">
+    <link rel="stylesheet" href="css/global.css?v=1.02">
+    <link rel="stylesheet" href="css/index.css?v=1.06">
+    <script src="js/JSEncrypt.js?v=0.01"></script>
+    <script src="js/wm.js?v=0.07"></script>
+    <script src="js/language.js?v=0.0.0.30"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="back_left"></div>
+        <div class="back_right"></div>
+        <div class="content">
+            <img class="content_icon content_top_left" src="src/icon/top_left.png"/>
+            <img class="content_icon content_top_right" src="src/icon/top_right.png"/>
+            <img class="content_icon content_bottom_left" src="src/icon/bottom_left.png"/>
+            <img class="content_icon content_bottom_right" src="src/icon/bottom_right.png"/>
+            <h1 wm-bind="welcome"></h1>
+            <h2 wm-bind="warning"></h2>
+            <p wm-bind="meetNum"></p>
+            <div>
+                <input id="meetNum" wm-placeholder="meetNumTip" type="number">
+                <img class="meetNumDown" onmousedown="thatData.meetNumSelect = !thatData.meetNumSelect;setTimeout(function(){d('meetNum').focus()})" src="src/icon/login/select.png"/>
+                <img onmousedown="d('meetNum').value='';isBtn();setTimeout(function(){d('meetNum').focus()})" src="src/icon/login/clear.png"/>
+                <div class="meetNumSelect" wm-if="meetNumSelect">
+                    <div class="meetNumSelectItem" wm-for="roomIdArr" onmousedown="if(JSON.parse(this.getAttribute('wm-forlist')).value){d('meetNum').value=JSON.parse(this.getAttribute('wm-forlist')).value;d('meetPass').value=JSON.parse(this.getAttribute('wm-forlist')).pass;d('userName').value=JSON.parse(this.getAttribute('wm-forlist')).user;thatData.meetNumSelect = false;}else{clearHistory()};isBtn()">
+                        <span for-bind="name"></span>
+                        <span for-bind="value"></span>
+                        <img src="src/icon/login/delete.png" onmousedown="event.stopPropagation();for(let i = 0; i < thatData.roomIdArr.length; i++){if(thatData.roomIdArr[i].value == JSON.parse(this.parentNode.getAttribute('wm-forlist')).value){thatData.roomIdArr.splice(i,1);thatData.roomIdArr=thatData.roomIdArr;localStorage.roomIdArr = JSON.stringify(thatData.roomIdArr)}};setTimeout(function(){d('meetNum').focus()});">
+                    </div>
+                </div>
+            </div>
+            <p wm-bind="meetPass"></p>
+            <div>
+                <input id="meetPass" wm-placeholder="meetPassTip" maxlength="4" type="password">
+                <img onmousedown="d('meetPass').type = d('meetPass').type == 'password'?'text':'password';" src="src/icon/login/view.png"/>
+                <img onmousedown="d('meetPass').value='';isBtn();setTimeout(function(){d('meetPass').focus()})" src="src/icon/login/clear.png"/>
+            </div>
+            <p wm-bind="userName"></p>
+            <div>
+                <input id="userName" wm-placeholder="userNameTip" maxlength="50" type="text">
+                <img onmousedown="d('userName').value='';isBtn();setTimeout(function(){d('userName').focus()})" src="src/icon/login/clear.png"/>
+            </div>
+            <button id="join" wm-bind="join"></button>
+        </div>
+        <!-- <h2 wm-bind="openSource"></h2> -->
+        <span wm-bind="version"></span>
+        <p><span><a wm-bind="agreement" target="_blank" href="https://support.lenovo.com/us/en/solutions/ht100141"></a></span><span><a wm-bind="statement" target="_blank" href="https://www.lenovo.com/privacy"></a></span></p>
+        <div class="tips" wm-ifx="tipsShow">
+            <img src="src/waring.png">
+            <span wm-bind="tipsText"></span>
+        </div>
+    </div>
+    <script src="js/index.js?v=0.05"></script>
+    <script>
+        // ajax({
+        //     url: Exclusive.URLS + '/board-center/roomController/createRoom',
+        //     data: {
+        //         userId: localStorage.userId,
+        //     },
+        //     dataType: 'json',
+        //     success: function(data){
+        //         log(data);59919851
+        //     }
+        // })
+        isBtn();
+        function isBtn(){
+            if(d('meetNum').value&&d('meetPass').value&&d('userName').value){
+                d('join').style.backgroundColor = '#158CFF';
+            }else{
+                d('join').style.backgroundColor = '#58adff';
+            }
+        }
+        
+        d('meetNum').oninput = function(){
+            //this.value=this.value.replace(/^[0-9]{7}$/g,'');
+            isBtn();
+            this.value = String(this.value).length < 6?this.value:Number(String(this.value).slice(0, 6));
+        }
+        
+        d('meetPass').oninput = function(){
+            this.value=this.value.replace(/ /g,'');
+            isBtn();
+        }
+        
+        d('userName').oninput = function(){
+            this.value=this.value.replace(/ /g,'');
+            isBtn();
+        }
+
+        //删除全部云记录
+        function clearHistory(){
+            if(confirm(thatData.clearHistory)){
+                localStorage.roomIdArr = JSON.stringify([]);
+                thatData.roomIdArr = [];
+                c('meetNumSelect')[0].style.visibility = 'hidden';
+            }
+        }
+
+        if(getUrlVal('pwd')){
+            d('meetPass').value = '****';
+        }
+
+        let roomId = getUrlVal('roomId');
+        if(roomId){
+            d('meetNum').value = roomId;
+        };
+
+        //加入房间
+        d('join').Click(function(){
+            let warningTip = '';
+            if(d('meetNum').value == ''){
+                warningTip = thatData.numWarning;
+            }else if(d('meetPass').value == ''){
+                warningTip = thatData.passWarning;
+            }else if(d('userName').value == ''){
+                warningTip = thatData.nameWarning;
+            }
+            thatData.warning = warningTip;
+            if(warningTip){
+                return false;
+            }
+            
+            ajax({  //创建用户接口
+                url: wm.URLS + '/board-center/boardUserController/createUser',
+                data: {
+                    userName: d('userName').value,
+                    source: 1,
+                    deviceType: wm.isPhone()?0:2,
+                },
+                dataType: 'json',
+                success: function(data){    //获取公钥接口
+                    if(data.code == 200){
+                        sessionStorage.userName = d('userName').value;
+                        sessionStorage.userId = data.data.userId;
+                        sessionStorage.roomId = d('meetNum').value;
+                        if(getUrlVal('pwd')){
+                            if(d('meetNum').value != roomId){
+                                if(d('meetPass').value.length!=4){
+                                    sessionStorage.roomPassKey = d('meetPass').value;
+                                    sessionStorage.roomPass = '****';
+                                }else{
+                                    sessionStorage.roomPass = d('meetPass').value;
+                                }
+                            }else{
+                                sessionStorage.roomPassKey = getUrlVal('pwd');
+                                sessionStorage.roomPass = '****';
+                            }
+                        }else if(d('meetPass').value.length!=4){
+                            sessionStorage.roomPassKey = d('meetPass').value;
+                            sessionStorage.roomPass = '****';
+                        }else{
+                            sessionStorage.roomPass = d('meetPass').value;
+                        }
+                        //加密密文给后端进行安全校验
+                        ajax({
+                            url: wm.URLS + '/board-center/roomController/getPublicKey',
+                            dataType: 'json',
+                            success: function(msg){
+                                if(msg.code == 200){
+                                    let enc,crypt = new JSEncrypt();
+                                    sessionStorage.publicKey = msg.data;
+                                    if(getUrlVal('pwd')){
+                                        if(d('meetNum').value != roomId){
+                                            if(d('meetPass').value.length!=4){
+                                                enc = d('meetPass').value;
+                                            }else{
+                                                crypt.setKey(sessionStorage.publicKey);
+                                                enc = crypt.encrypt(d('meetPass').value);
+                                            }
+                                        }else{
+                                            enc = getUrlVal('pwd');
+                                        }
+                                    }else if(d('meetPass').value.length!=4){
+                                        enc = d('meetPass').value;
+                                    }else{
+                                        crypt.setKey(sessionStorage.publicKey);
+                                        enc = crypt.encrypt(d('meetPass').value);
+                                    }
+                                    let joinRoomObj = {
+                                        userName: sessionStorage.userName,
+                                        userId: sessionStorage.userId,
+                                        roomId: sessionStorage.roomId,
+                                        password: enc,
+                                        source: 1,
+                                        enWrite: 1,
+                                        enSpeak: 1,
+                                    };
+                                    let joinRoomObjStr = JSON.stringify(joinRoomObj);
+                                    ajax({  //用户加入房间
+                                        url: wm.URLS + '/board-center/boardUserController/joinUserRoom',
+                                        data: joinRoomObjStr,
+                                        header: 'application/json',
+                                        dataType: 'json',
+                                        success: function(datamsg){
+                                            log(datamsg);
+                                            if(datamsg.code == 200){
+                                                if(datamsg.data.flag == 0){
+                                                    ajax({
+                                                        url: wm.URLS + '/board-center/roomController/getCloudShareBackup',
+                                                        data: {
+                                                            roomId: sessionStorage.roomId,
+                                                        },
+                                                        dataType: 'json',
+                                                        success: function(dataData){
+                                                            if(dataData.code == 200){
+                                                                if(dataData.data.imgUrls != ''){
+                                                                    let roomList = [];
+                                                                    roomList.push(sessionStorage.roomId)
+                                                                    ajax({  //查询
+                                                                        url: wm.URLS + '/board-center/roomController/getCloudShare',
+                                                                        data: JSON.stringify({roomList: roomList}),
+                                                                        header: 'application/json',
+                                                                        dataType: 'json',
+                                                                        success: function(dataMsg){
+                                                                            if(dataMsg.data[0].delState == 0){
+                                                                                window.location.href = 'history.html';
+                                                                            }else{
+                                                                                thatData.tipsShow = true;
+                                                                                thatData.tipsText = thatData.cloudInvalid;
+                                                                                setTimeout(function(){
+                                                                                    thatData.tipsShow = false;
+                                                                                },3000)
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                }else{
+                                                                    thatData.tipsShow = true;
+                                                                    thatData.tipsText = thatData.cloudNoSave;
+                                                                    setTimeout(function(){
+                                                                        thatData.tipsShow = false;
+                                                                    },3000)
+                                                                }
+                                                            }
+                                                        }
+                                                    })
+                                                    return false;
+                                                }
+                                                let roomIdArr = [],isRepeat = true;
+                                                if(localStorage.roomIdArr){
+                                                    roomIdArr = JSON.parse(localStorage.roomIdArr);
+                                                    for(let i of roomIdArr){
+                                                        if(i.value == sessionStorage.roomId){
+                                                            isRepeat = false;
+                                                        }
+                                                    }
+                                                    if(isRepeat){
+                                                        let roomIdObj = {};
+                                                        roomIdObj.name = datamsg.data.roomName;
+                                                        roomIdObj.value = sessionStorage.roomId;
+                                                        if(getUrlVal('pwd') && d('meetNum').value == roomId){
+                                                            roomIdObj.pass = getUrlVal('pwd');
+                                                        }else{
+                                                            roomIdObj.pass = d('meetPass').value;
+                                                        }
+                                                        roomIdObj.user = d('userName').value;
+                                                        roomIdArr.unshift(roomIdObj);
+                                                        localStorage.roomIdArr = JSON.stringify(roomIdArr);
+                                                    }
+                                                }else{
+                                                    let roomIdObj = {};
+                                                    roomIdObj.name = datamsg.data.roomName;
+                                                    roomIdObj.value = sessionStorage.roomId;
+                                                    if(getUrlVal('pwd') && d('meetNum').value == roomId){
+                                                        roomIdObj.pass = getUrlVal('pwd');
+                                                    }else{
+                                                        roomIdObj.pass = d('meetPass').value;
+                                                    }
+                                                    roomIdObj.user = d('userName').value;
+                                                    roomIdArr.unshift(roomIdObj);
+                                                    localStorage.roomIdArr = JSON.stringify(roomIdArr);
+                                                }
+                                                sessionStorage.roomName = datamsg.data.roomName;
+                                                window.location.href = 'main.html';
+                                            }else if(datamsg.code == 400){
+                                                thatData.warning = thatData.passErr;
+                                            }else if(datamsg.code == 410){
+                                                thatData.warning = thatData.numErr;
+                                            }else{
+                                                thatData.tipsShow = true;
+                                                thtaData.tipsText = thatData.joinRoomFail;
+                                                setTimeout(function(){
+                                                    thatData.tipsShow = false;
+                                                },3000)
+                                            }
+                                        }
+                                    })
+                                }else{
+                                    thatData.tipsShow = true;
+                                    thtaData.tipsText = thatData.joinRoomFail;
+                                    setTimeout(function(){
+                                        thatData.tipsShow = false;
+                                    },3000)
+                                }
+                            }
+                        })
+                    }else{
+                        alern(thatData.createUserFail);
+                    }
+                },
+                error: function(){
+                    thatData.tipsShow = true;
+                    thatData.tipsText = thatData.netError;
+                    setTimeout(function(){
+                        thatData.tipsShow = false;
+                    },3000)
+                }
+            })
+        })
+    </script>
+</body>
+</html>

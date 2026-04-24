@@ -1,0 +1,23 @@
+/* 特别修复 AntD 提示框，彻底去掉焦点选中 */
+.ant-message,
+.ant-message * {
+  user-select: none !important;
+  outline: none !important;
+}
+.game-progress{
+    position: fixed;
+    top: 0;
+    left: calc(50% - 140px);
+    user-select: none;
+    .ant-progress-indicator{
+        color: #ffffff !important;
+        font-size: 16px !important;
+    }
+}
+.game01-ul{
+    position: fixed;
+    left: 10px;
+    bottom: 40px;
+    list-style-type: none;
+    user-select: none;
+}

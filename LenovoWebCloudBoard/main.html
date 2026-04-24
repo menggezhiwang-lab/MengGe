@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1,toolbar=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="full-screen" content="yes">
+    <title wm-bind="title"></title>
+    <link rel="icon" href="src/icon.png" type ="image/x-icon">
+    <link rel="stylesheet" href="css/global.css?v=1.03">
+    <link rel="stylesheet" href="css/main.css?v=1.91">
+    <script src="js/transformation-matrix.js?v=0.02"></script>
+    <script src="js/ulid.js?v=0.02"></script>
+    <script src="js/JSEncrypt.js?v=0.02"></script>
+    <script src="js/html2canvas.min.js?v=0.02"></script>
+    <script src="js/qrcode.js?v=0.01"></script>
+    <script src="js/jszip-utils.js?v=0.01"></script>
+    <script src="js/jszip.js?v=0.01"></script>
+    <script src="js/reconnecting-websocket.min.js"></script>
+    <script src="js/wm.js?v=2.17"></script>
+    <script src="js/uuid.js?v=0.01"></script>
+    <script src="js/language.js?v=1.09"></script>
+</head>
+<body wm-style="backgroundColor: backColor;">
+    <h1 id="h1" wm-bind="flatScreen"></h1>
+    <h2 id="h2" style="display: none;">123</h2>
+    <div id="back_image" class="back_image" wm-style="backgroundImage: backImage;zIndex: backIndex;">
+        <div wm-if="backImageShow"></div>
+    </div>
+    <canvas id="canvas"></canvas>   <!-- 渲染层canvas -->
+    <canvas id="canvas_actual"></canvas>   <!-- 画笔实时绘制层canvas -->
+    <canvas id="canvas_draw"></canvas>  <!-- 绘制层canvas -->
+    <!-- 设备列表 -->
+    <div class="dev" wm-ifo="devShow">
+        <div class="dev_head"><span wm-bind="devText"></span><b onclick="thatData.devShow = false;"></b></div>
+        <div class="dev_temp">
+            <div class="dev_item" wm-for="devList">
+                <img for-src="user">
+                <div>
+                    <p for-style="color: color;">
+                        <span for-bind="userName"></span>
+                        <img for-if="userEditShow" onclick="thatData.editUserNameShow = true;c('editUserNameInput')[0].value = sessionStorage.userName;thatData.editUserName20 = false;" src="src/dev/edit.png">
+                        <span class="clear"></span>
+                    </p>
+                    <p for-if="userTextShow" for-style="color: color;">(<span for-bind="userText"></span>)</p>
+                </div>
+                <!-- <img for-if="enSpeak" src="src/dev/voice.png">
+                <img for-else="enSpeak" src="src/dev/novoice.png"> -->
+                <img for-if="enWrite" src="src/dev/brush.png">
+                <img for-else="enWrite" src="src/dev/nobrush.png">
+            </div>
+        </div>
+    </div>
+    <!-- 会议信息 -->
+    <div class="info" wm-ifo="infoShow">
+        <div class="info_head"><span wm-bind="infoTitle"></span><b onclick="thatData.infoShow = false;"></b></div>
+        <div class="info_temp">
+            <div class="info_item_top">
+                <p wm-bind="infoheader"></p>
+                <div id="info_item_ewm"></div>
+            </div>
+            <div class="info_item_bottom">
+                <div class="info_item_bottom_left">
+                    <p wm-bind="roomName"></p>
+                    <p wm-bind="roomLink"></p>
+                    <p wm-bind="roomPassword"></p>
+                </div>
+                <div class="info_item_bottom_right">
+                    <p wm-bind="roomId"></p>
+                    <!-- <p>https://cloudboard.lenovo.com</p> -->
+                    <p wm-bind="infoUrl"></p>
+                    <p wm-bind="roomPass"></p>
+                </div>
+            </div>
+            <p wm-click="thatData.infoCopy"><img src="src/copy.png"><span wm-bind="copyAllInfo"></span></p>
+        </div>
+    </div>
+    <!-- 底部控件内容 -->
+    <div class="controller_left" wm-else="controllerLeftShow" wm-click="thatData.controllerLeftClick">
+        <img src="src/controller/view.png">
+        <span wm-bind="returnUser"></span>
+    </div>
+    <div class="controller">
+        <div>
+            <div class="controller_temp controller_temp_left">
+                <!-- <div class="controller_temp_left_item" wm-for="btnLeft" for-click="click">
+                    <img for-else="select" for-src="image"/>
+                    <img for-if="select" for-src="selectImage"/>
+                    <img for-if="disabled" for-src="disabledImage">
+                </div> -->
+            </div>
+        </div>
+        <div>
+            <!-- 画笔工具 -->
+            <div class="brush" wm-ifo="brushShow">
+                <div class="brush_color">
+                    <div class="brush_color_item" wm-for="brushColorArr" for-style="backgroundColor: color" for-click="click">
+                        <img for-if="select" for-src="image" draggable="false"/>
+                    </div>
+                </div>
+                <div class="brush_thickness">
+                    <div class="brush_thickness_item" wm-for="brushThicknessArr" for-click="click">
+                        <span for-if="select"></span>
+                        <b for-style="width: thickness;height: thickness"></b>
+                    </div>
+                </div>
+            </div>
+            <div class="controller_temp controller_temp_center">
+                <div class="controller_temp_center_item" wm-for="btnCenter" for-click="click">
+                    <img for-else="select" draggable="false" for-src="image"/>
+                    <img for-if="select" draggable="false" for-src="selectImage"/>
+                    <img for-if="disabled" draggable="false" for-src="disabledImage">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="controller_temp controller_temp_right">
+                <div class="controller_temp_right_item" wm-for="btnRight" for-click="click">
+                    <img for-else="select" draggable="false" for-src="image"/>
+                    <img for-if="select" draggable="false" for-src="selectImage"/>
+                    <img for-if="disabled" draggable="false" for-src="disabledImage">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 正在使用云分享 -->
+    <div class="using" wm-ifx="usingShow">
+        <div>
+            <img src="src/using.png">
+            <b wm-style="backgroundColor: usingColor"></b>
+        </div>
+        <p wm-bind="usingText"></p>
+    </div>
+    <!-- 正在加入 -->
+    <div class="joinFixed" wm-if="joinShow">
+        <div class="join">
+            <img src="src/loading.png">
+            <p wm-bind="joinText"></p>
+        </div>
+    </div>
+    <!--加入、结束分享提示贴纸-->
+    <div class="sticker_fixed" wm-if="stickerShow">
+        <div class="sticker">
+            <img wm-src="stickerImage">
+            <p class="sticker_p" wm-bind="stickerText"></p>
+            <div class="sticker_bottom">
+                
+            </div>
+        </div>
+    </div>
+    <!-- 通知tips提示 -->
+    <div class="tips" wm-ifx="tipsShow">
+        <img wm-src="tipsImage">
+        <p wm-bind="tipsText"></p>
+    </div>
+    <!-- 插入文本 -->
+    <div class="insertText" wm-for="textArray" for-if="show" for-style="left: left;top: top;">
+        <label for-style="fontSize: size;" for-bind="textInfo"></label>
+        <textarea for-blur="blur" for-value="text" for-input="input" for-style="fontSize: size;color: color;" wm-placeholder="insertTextTips"></textarea>
+        <!-- <input for-style="fontSize: size;" type="text" for-blur="blur" for-input="input" wm-placeholder="insertTextTips"> -->
+    </div>
+    <!-- 插入图片 -->
+    <!-- <div class="insertImage" wm-for="imageArray" for-if="show" for-style="left: left;top: top;">
+            <img for-src="src" draggable="false" for-load="load">
+    </div> -->
+    <!-- 拖动屏幕模式 -->
+    <div class="dragScreen" wm-if="dragScreenShow"></div>
+    <!-- 圈选模式 -->
+    <canvas class="circlSelect" wm-if="circlSelectShow"></canvas>
+    <div class="circController" wm-if="circControllerShow">
+        <div class="circControllerTop">
+            <b wm-style="borderColor: circTextColorSelectObj.border;backgroundColor: circTextColorSelectObj.color;" wm-if="circTextColorShow"></b>
+            <img class="circTextColor" wm-if="circTextColorShow" onclick="thatData.circControllerTempBottomShow = !thatData.circControllerTempBottomShow" src="src/circ/textColor.png" draggable="false">
+            <span wm-if="circTextColorShow"></span>
+            <img class="circEditText" wm-if="circEditTextShow" src="src/circ/editText.png" draggable="false">
+            <img class="circCopy" src="src/circ/copy.png" draggable="false">
+            <img class="circDelete" src="src/circ/delete.png" draggable="false">
+        </div>
+        <div class="circControllerTempBottom" wm-ifx="circControllerTempBottomShow">
+            <div class="circTextColorList" wm-for="circTextColorArr" for-click="click" for-style="backgroundColor: color;">
+                <img for-if="select" for-src="selectImage" draggable="false">
+            </div>
+        </div>
+    </div>
+    <div class="circScaleRotate" wm-ifx="circScaleRotateShow">
+        <img class="circScale" src="src/circ/scale.png" draggable="false">
+        <img class="circRotate" src="src/circ/rotate.png" wm-if="circRotateShow" draggable="false">
+    </div>
+    <!-- 插入图片 -->
+    <input id="insetImage" type="file" style="display: none;">
+    <!-- <img id="insetImageImg" style="display: none;"> -->
+    <!-- 修改用户名称 -->
+    <div class="editUserName" wm-if="editUserNameShow">
+        <div class="editUserNameHead">
+            <h2 wm-bind="editUserNameTitle"></h2>
+            <p><span wm-bind="editUserNameLength" wm-if="editUserName20"></span></p>
+            <div>
+                <!-- oninput="this.value=this.value.replace(/[^/a-zA-Z0-9\u4E00-\u9FA5]/g,'')" -->
+                <input class="editUserNameInput" maxlength="50" type="text">
+                <img onmousedown="c('editUserNameInput')[0].value='';setTimeout(function(){c('editUserNameInput')[0].focus()})" src="src/icon/login/clear.png"/>
+                <span wm-if="editUserName20"></span>
+            </div>
+        </div>
+        <div class="editUserNameFoot">
+            <span wm-bind="editUserNameCancel" onclick="thatData.editUserNameShow = false;"></span>
+            <span wm-bind="editUserNameConfirm" wm-click="thatData.editUserNameConfirmClick"></span>
+        </div>
+    </div>
+    <!-- 主持人断线，正在重连 -->
+    <div class="reconnect" wm-if="reconnectShow">
+        <div>
+            <div>
+                <img src="src/loadings.png">
+                <p wm-bind="reconnect"></p>
+            </div>
+            <div wm-bind="exit" onclick="window.location.href = 'index.html'"></div>
+        </div>
+    </div>
+    <!-- 页面跟随主持人视角超出主持人视野蒙版 -->
+    <div class="prevMask" wm-if="maskShow"></div>
+    <div class="nextMask" wm-if="maskShow"></div>
+    <script src="js/main.js?v=2.99"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猛哥生日抽奖程序</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            font-size: 32px;
+            padding: 100px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 200px;
+            height: 80px;
+            position: absolute;
+            bottom: 200px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            background-color: pink;
+            color: #FFFFFF;
+            font-size: 32px;
+            border-radius: 8px;
+        }
+
+        .main>p>span {
+            color: green;
+        }
+
+        button:hover {
+            background-color: palevioletred;
+        }
+
+        button:active {
+            background-color: plum;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main"></div>
+    <button id="btn">抽奖</button>
+    <script>
+        let personnelArray = ['汪汪队恰牢饭', '言叶の森', '猫肉火锅', '阿樱吃不饱', '卓卓子', '无常', '玻璃动物', '妖姬', 'Jahseh_Lee', '是takiku啊', '沐芯H', 'MAG', '白桥梓', '冰幻汐月', '椰宝猫儿', 'FUUNTG', '紫气东来', '破碎星星', '人生常态', '不待风吹的花', '你要飞走了吗', '夏目久川', '硫酸不是酸', '秋樱吹雪', '烨酱', '初夏是白桃味', '世界第一酸辣粉', '候鸟', 'Seraphine', '桃桃乌龙茶', '钱多自然帅', '数落w', '足够e', '咸鱼'];
+        console.log(personnelArray.length);
+        let main = document.getElementsByClassName('main')[0];
+        let ii;
+        for (let i of personnelArray) {
+            let p = document.createElement('p');
+            p.innerHTML = i + '&nbsp;&nbsp;-&nbsp;&nbsp;<span class="mainSpan">0</span>';
+            main.appendChild(p);
+        }
+        let clickStatus = true, timoer;
+        document.getElementById('btn').onclick = function () {
+            let mainSpan = document.getElementsByClassName('mainSpan');
+            if (clickStatus) {
+                clickStatus = false;
+                timoer = setInterval(function () {
+                    for (let i of mainSpan) {
+                        ii = parseInt(Math.random() * 100);
+                        i.innerHTML = ii;
+                        console.log(ii);
+                        i.style.color = ii > 90?'red':'green';
+                    }
+                }, 20)
+            } else {
+                clickStatus = true;
+                clearInterval(timoer);
+            }
+        }
+
+        // 冠军 1名     100QB   桃桃乌龙茶（已发）
+        // 亚军 2名     80QB    钱多自然帅（已发）  数落w（已发）
+
+        // 安慰奖2名    50QB    足够e  咸鱼（已发）
+    </script>
+</body>
+
+</html>

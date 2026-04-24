@@ -1,0 +1,85 @@
+@import '~antd/dist/antd.css';
+.Report {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.Report .report_head .report_form {
+  display: flex;
+}
+.Report .report_head .report_form label {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+.Report .report_head .report_form .dev_name {
+  width: 144px;
+  margin-right: 40px;
+}
+.Report .report_head .report_form .dev_state {
+  width: 100px;
+  margin-right: 40px;
+}
+.Report .report_head .report_form .school_name {
+  width: 200px;
+  margin-right: 40px;
+}
+.Report .report_head .report_form .report_search {
+  margin-left: 30px;
+  margin-top: 33px;
+}
+.Report .report_head .report_form .dev_time {
+  margin-right: 40px;
+}
+.Report .report_head .report_form .report_reset {
+  margin-left: 16px;
+  margin-top: 33px;
+}
+.Report .report_head .report_form .report_export {
+  margin-left: 16px;
+  margin-top: 33px;
+}
+.Report .report_content {
+  margin-top: 20px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.Report .report_content .report_table {
+  text-align: center;
+}
+.Report .report_content .report_table table {
+  color: rgba(0, 0, 0, 0.65);
+}
+.Report .report_content .report_table table thead tr th {
+  color: rgba(0, 0, 0, 0.65);
+}
+.Report .report_content .report_table .table_name {
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  padding-left: 32px;
+  position: relative;
+}
+.Report .report_content .report_table .table_name .table_name_icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 32px;
+  padding-right: 16px;
+}
+.Report .report_content .report_table .table_name .table_name_text {
+  width: 120px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  color: #1890FF;
+}
+.Report .report_content .report_table .table_state {
+  width: 74px;
+  height: 24px;
+  font-size: 14px;
+  border-radius: 2px;
+}

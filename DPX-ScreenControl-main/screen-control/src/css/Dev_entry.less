@@ -1,0 +1,83 @@
+html,body{
+    height: 100%;
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+.dev_entry{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    .dev_entry_head{
+        width: 100%;
+        height: auto;
+        img{
+            width: 100%;
+        }
+    }
+    .dev_entry_p{
+        width: 100%;
+        height: 4rem;
+        line-height: 4rem;
+        text-align: center;
+        background-color: #2093F8;
+        font-size: 1.7rem;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    .dev_entry_table{
+        width: 100%;
+        td{
+            height: 5.6rem;
+            border-bottom: 1px #e5e5e5 solid;
+            input{
+                width: 100%;
+                height: 100%;
+                border: 0;
+                padding: 0 1.2rem;
+                font-size: 1.7rem;
+                box-sizing: border-box;
+                background-color: #fff;
+                outline:none;
+            }
+            .dev_id{
+                color: rgba(0,0,0,.3);
+            }
+            input:-moz-placeholder {  color: rgba(0,0,0,.3); }/* Mozilla Firefox 4 to 18 */
+
+            input::-moz-placeholder { color: rgba(0,0,0,.3); } /* Mozilla Firefox 19 */ 
+
+            input:-ms-input-placeholder{ color: rgba(0,0,0,.3); }
+
+            input::-webkit-input-placeholder{ color: rgba(0,0,0,.3); }
+
+            input::-moz-input-placeholder{ color: rgba(0,0,0,.3); }
+        }
+        td:nth-child(odd){
+            width: 100px;
+            padding-left: 1.5rem;
+            font-size: 1.7rem;
+            color: rgba(0,0,0,.9);
+        }
+    }
+    .dev_entry_fixed{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        background-color: #fff;
+        text-align: center;
+        padding-top: 12rem;
+        box-sizing: border-box;
+        transition: .2s;
+        transition-timing-function: ease-out;
+        img{
+            width: 20rem;
+            height: 15rem;
+        }
+        p{
+            font-size: 1.7rem;
+            margin-top: 4.8rem;
+            margin-bottom: 4.8rem;
+        }
+    }
+}

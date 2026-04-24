@@ -1,0 +1,90 @@
+@import '~antd/dist/antd.css';
+.Report{
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .report_head{
+        .report_form{
+            display: flex;
+            label{
+                font-size: 16px;
+                font-weight: 500;
+                color: rgba(0,0,0,.65);
+            }
+            .dev_name{
+                width: 144px;
+                margin-right: 40px;
+            }
+            .dev_state{
+                width: 100px;
+                margin-right: 40px;
+            }
+            .school_name{
+                width: 200px;
+                margin-right: 40px;
+            }
+            .report_search{
+                margin-left: 30px;
+                margin-top: 33px;
+            }
+            .dev_time{
+                margin-right: 40px;
+            }
+            .report_reset{
+                margin-left: 16px;
+                margin-top: 33px;
+            }
+            .report_export{
+                margin-left: 16px;
+                margin-top: 33px; 
+                // border: 1px rgba(0, 0, 0, 0.15) solid;
+                // background-color: #fff;
+                // color: rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+    .report_content{
+        margin-top: 20px;
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .report_table{
+            text-align: center;
+            table{
+                color: rgba(0,0,0,.65);
+                thead tr th{
+                    color: rgba(0,0,0,.65);
+                }
+            }
+            .table_name{
+                border: 0;
+                background-color: rgba(0,0,0,0);
+                padding-left: 32px;
+                position: relative;
+                .table_name_icon{
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    width: 32px;
+                    padding-right: 16px;
+                }
+                .table_name_text{
+                    width: 120px;
+                    font-size: 14px;
+                    white-space:pre-wrap;
+                    color: #1890FF;
+                }
+            }
+            .table_state{
+                width: 74px;
+                height: 24px;
+                font-size: 14px;
+                border-radius: 2px;
+            }
+        }
+    }
+}

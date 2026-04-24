@@ -1,0 +1,14 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { HashRouter } from 'react-router-dom' // 新增：导入 HashRouter
+import './index.scss'
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <HashRouter>
+        <App />
+    </HashRouter>
+  </StrictMode>,
+  
+)

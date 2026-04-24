@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title wm-bind="title"></title>
+    <link rel="icon" href="src/icon.png" type ="image/x-icon">
+    <link rel="stylesheet" href="css/global.css?v=0.01">
+    <link rel="stylesheet" href="css/history.css?v=0.01">
+    <script src="js/wm.js?v=0.05"></script>
+    <script src="js/language.js?v=0.05"></script>
+    <script src="js/jsPdf.js?v=0.01"></script>
+    <script src="js/down.js?v=0.01"></script>
+</head>
+<body>
+    <div class="main">
+        <img id="mainImg" wm-src="imageBack" alt="">
+    </div>
+    <div class="downFixed" wm-if="downFixed">
+        <div class="downBody">
+            <span onmousedown="thatData.downFixed = false;"></span>
+            <p wm-bind="selectDownFile"></p>
+            <div>
+                <div><input name="imageSelect" type="radio" value="jpeg" checked><span>JPEG</span></div>
+                <div><input name="imageSelect" type="radio" value="png"><span>PNG</span></div>
+                <div><input name="imageSelect" type="radio" value="pdf"><span>PDF</span></div>
+            </div>
+            <button id="downLoad" wm-bind="down"></button>
+        </div>
+    </div>
+    <div class="controller">
+        <div class="controller_prev">
+            <img draggable="false" wm-src="prev">
+        </div>
+        <div class="controller_page">
+            <span wm-bind="currentPage"></span>/<span wm-bind="totalPage"></span>  
+        </div>
+        <div class="controller_next">
+            <img draggable="false" wm-src="next">
+        </div>
+        <div class="controller_down">
+            <img draggable="false" src="src/history/down.png">
+            <span wm-bind="down"></span>
+        </div>
+    </div>
+    <a id="download" download="download"></a>
+    <script src="js/history.js?v=0.05"></script>
+</body>
+</html>

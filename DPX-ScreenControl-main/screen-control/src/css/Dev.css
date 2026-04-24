@@ -1,0 +1,294 @@
+@import '~antd/dist/antd.css';
+html,
+body {
+  overflow-x: hidden;
+}
+.Manage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.Manage .manage_left {
+  width: 288px;
+  margin-right: 36px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.Manage .manage_left .left_box {
+  width: 100%;
+  flex-grow: 1;
+  background-color: #F8F9FA;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.Manage .manage_left .left_box .left_temp {
+  background-color: #F8F9FA;
+  color: #646C7E;
+  font-size: 14px;
+  position: relative;
+}
+.Manage .manage_left .left_box .left_temp .ant-tree-treenode {
+  width: 100%;
+  height: 24px;
+  padding: 8px 0;
+  box-sizing: initial;
+}
+.Manage .manage_left .left_box .left_temp .anticon-down {
+  position: relative;
+  top: 6px;
+}
+.Manage .manage_left .left_box .left_temp .ant-tree-node-content-wrapper {
+  position: initial;
+}
+.Manage .manage_left .left_box .left_temp .left_temp_p {
+  width: 168px;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.Manage .manage_left .left_box .left_temp .left_temp_p b {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 50%;
+  user-select: none;
+  position: absolute;
+  right: 10px;
+  transform: rotate(90deg);
+}
+.Manage .manage_left .left_box .left_temp .left_temp_p b:hover {
+  color: #0099F4;
+}
+.Manage .manage_right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.Manage .manage_right .right_head {
+  display: flex;
+  min-width: 661px;
+  justify-content: space-between;
+}
+.Manage .manage_right .right_head ul {
+  border: 0;
+}
+.Manage .manage_right .right_head .right_head_menu li {
+  margin-right: 30px;
+  margin-left: 0;
+  font-size: 16px;
+  color: #646C7E;
+}
+.Manage .manage_right .right_head .right_head_icon li {
+  min-width: 48px;
+  height: 48px;
+  line-height: 48px;
+  margin-left: 8px;
+  margin-right: 0;
+  border: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+.Manage .manage_right .right_head .right_head_icon li > button {
+  margin-top: 8px;
+  border: 1px rgba(0, 0, 0, 0.15) solid;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.25);
+}
+.Manage .manage_right .right_head .right_head_icon li > span {
+  display: inline-block;
+  font-size: 24px;
+  margin-top: 12px;
+}
+.Manage .manage_right .right_box {
+  margin-top: 20px;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.Manage .manage_right .right_box table {
+  color: rgba(0, 0, 0, 0.65);
+}
+.Manage .manage_right .right_box table thead tr th {
+  color: rgba(0, 0, 0, 0.65);
+}
+.Manage .manage_right .right_box .table_name {
+  border: 0;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.Manage .manage_right .right_box .table_operation {
+  font-size: 14px;
+  border: 0;
+  color: #1890FF;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.Manage .manage_right .right_box .table_operation a {
+  color: #1890FF;
+}
+.Manage .manage_right .right_box .right_page {
+  text-align: right;
+}
+.Manage .manage_right .right_box .right_temp {
+  display: flex;
+  flex-wrap: wrap;
+}
+.Manage .manage_right .right_box .right_temp .right_list {
+  width: 200px;
+  height: 160px;
+  border: 1px #D8D8D8 solid;
+  margin-right: 24px;
+  margin-bottom: 24px;
+  box-sizing: unset;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head {
+  width: 200px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  position: relative;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .ant-image:nth-child(2) {
+  opacity: 0;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fafafa;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head > div > img {
+  max-height: 100%;
+}
+@keyframes right_list_head_loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .right_list_head_loading_hide {
+  opacity: 0;
+  cursor: pointer;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .right_list_head_loading_show {
+  background-color: rgba(153, 153, 153, 0.5);
+  opacity: 1;
+  position: relative;
+  cursor: not-allowed;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .right_list_head_loading_show > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .right_list_head_loading {
+  width: 40px;
+  height: 40px;
+  margin-left: 80px;
+  margin-top: 30px;
+  animation: right_list_head_loading 1s linear infinite;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .img_off {
+  height: 100%;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_head .right_list_head_tips {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  background-color: #faad14;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_content {
+  width: 200px;
+  height: 60px;
+  padding: 12px;
+  border-top: 1px #d8d8d8 solid;
+}
+.Manage .manage_right .right_box .right_temp .right_list .right_list_content a {
+  font-size: 13px;
+  color: #1890ff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.moreManage {
+  width: 120px;
+  color: #646C7E !important;
+  border-color: #646C7E !important;
+}
+.moreManage span {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.moreManage span:nth-child(2) {
+  position: relative;
+  left: 10px;
+}
+.moreManage:hover {
+  color: #1B90FF !important;
+  border-color: #1B90FF !important;
+}
+.moreManageList {
+  width: 120px;
+  height: auto;
+  padding: 10px;
+  padding-bottom: 1px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 21px 0px rgba(176, 176, 176, 0.4);
+  position: relative;
+  top: 5px;
+}
+.moreManageList button {
+  width: 100px;
+  display: block;
+  border-color: #d9d9d9;
+  color: #bfbfbf;
+  margin-bottom: 10px;
+}
+.moreManageList button:hover {
+  border-color: #d9d9d9 !important;
+  color: #bfbfbf !important;
+}
+.table_state {
+  width: 74px;
+  height: 24px;
+  font-size: 14px;
+  border-radius: 2px;
+}
+.ant-popover-inner-content {
+  padding: 0;
+}
+.TreeContentItem {
+  padding: 5px 0;
+  border-radius: 4px;
+}
+.TreeContentItem p {
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 0;
+  cursor: pointer;
+  padding: 0 24px;
+  user-select: none;
+}
+.TreeContentItem p:hover {
+  background-color: #F6F7FB;
+}

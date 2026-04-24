@@ -1,0 +1,102 @@
+:root{
+    --bg-color: rgb(71, 72, 75);
+    --bg-light-color: #fff;
+    --bg-dark-color: rgb(71, 72, 75);
+    --light-link-color: #fff;
+    --dark-link-color: #333;
+    --light-font-color: #fff;
+    --dark-font-color: #333;
+    --color-link: #1352d1;
+    --color-link-hover: #111;
+    overflow: hidden;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#root {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-dark-color);
+    /* 保留滚动位置，避免页面跳顶 */
+}
+
+.logo {
+    height: 10em;
+    padding: 1.5em;
+    position: relative;
+    z-index: 2;
+    img {
+        width: 10em;
+        height: 10em;
+        animation: logo-spin infinite 3s linear;
+    }
+    img:hover {
+        animation: logo-spin infinite 1s linear;
+    }
+}
+
+@keyframes logo-spin {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.5);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
+}
+
+#AppCanv{
+    touch-action: 'none',
+}
+
+.card {
+    position: relative;
+    z-index: 9999;
+}
+
+.read-the-docs {
+    color: #888;
+}
+$appListHeight: 40px;
+.app-list{
+    position: fixed;
+    max-height: $appListHeight;
+    width: 130px;
+    right: 200px;
+    bottom: 100px;
+    z-index: 99999;
+    overflow: hidden;
+    transition: max-height .3s;
+    border-radius: 5px;
+    button{
+        display: block;
+        width: 100%;
+        height: $appListHeight;
+        border: none;
+        outline: none;
+        border-radius: 0;
+        user-select: none;
+        &:hover{
+            opacity: .8;
+        }
+        &:active{
+            opacity: .5;
+        }
+    }
+}
+.app-list-btn-select{
+    color: #fff;
+    background-color: #666;
+}
